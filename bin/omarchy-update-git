@@ -4,11 +4,9 @@ set -euo pipefail
 echo -e "\e[32mUpdate Omarchy\e[0m"
 
 # Ensure we have full history before pulling
-if git -C "$OMARCHY_PATH" rev-parse --is-shallow-repository >/dev/null 2>&1; then
-  if [ "$(git -C "$OMARCHY_PATH" rev-parse --is-shallow-repository)" = "true" ]; then
-    echo "Unshallowing repository..."
-    git -C "$OMARCHY_PATH" fetch --unshallow --quiet
-  fi
+if [ "$(git -C "$OMARCHY_PATH" rev-parse --is-shallow-repository 2>/dev/null)" = "true" ]; then
+  echo "Unshallowing repository..."
+  git -C "$OMARCHY_PATH" fetch --unshallow --quiet
 fi
 
 git -C "$OMARCHY_PATH" pull --autostash
